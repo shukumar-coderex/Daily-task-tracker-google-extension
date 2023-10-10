@@ -1,0 +1,15 @@
+{
+    "name" : "Daily Task Tracker",
+    "description" :  "Create your daily task",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "storage"
+      ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js" 
+      }
+}
