@@ -1,4 +1,3 @@
-// Initialize dailyTasks with an empty array
 let dailyTasks = [];
 
 document.getElementById("updateTaskButton").style.display = "none";
@@ -7,7 +6,6 @@ document.getElementById("updateTitleButton").style.display = "none";
 // Load data from Chrome extension storage on page load
 chrome.storage.local.get({ dailyTasks: [] }, function (result) {
   dailyTasks = result.dailyTasks;
-  // console.log(result);
   displayTasks();
 });
 
@@ -25,16 +23,14 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
     taskStatus,
     taskLink,
   };
-  // console.log(date)
   if (!taskName || !taskStatus || !taskLink) {
     return alert("Get the valid input!!");
   }
 
-
   // Find the daily task by title
   // let dailyTaskTitle = dailyTasks.find((task) => task.title === taskTitle);
   let dailyTask = dailyTasks.find((task) => task.date === date);
-// console.log(dailyTasks)
+  // console.log(dailyTasks);
   if (!dailyTask) {
     dailyTask = {
       title: taskTitle,
@@ -94,10 +90,6 @@ function displayTasks() {
       // // Attach the click event listener to the edit button
       // editBtn.addEventListener("click", function () {
 
-        
-
-
-
       //   updateTask(task.taskName, task.taskStatus, task.taskLink, index, taskIndex);
       // });
 
@@ -105,8 +97,6 @@ function displayTasks() {
       //   fillInputFieldsForEdit(task.taskName, task.taskStatus, task.taskLink);
       //   document.getElementById("updateTaskButton").style.display = "block";
       // });
-      
-    
 
       const deleteBtn = taskItem.querySelector(".deleteBtn");
       deleteBtn.addEventListener("click", function () {
@@ -121,13 +111,6 @@ function displayTasks() {
   });
 }
 
-
-
-
-
-
-
-
 function EditTitleText(inputTaskTitle, index) {
   document.getElementById("addTaskButton").style.display = "none";
   document.getElementById("updateTaskButton").style.display = "none";
@@ -140,12 +123,13 @@ function EditTitleText(inputTaskTitle, index) {
   // // console.log(taskTitle)
   const newTaskTitle = document.getElementById("taskTitle");
   newTaskTitle.value = inputTaskTitle;
-  document.getElementById("updateTitleButton").addEventListener("click", function () {
+  document
+    .getElementById("updateTitleButton")
+    .addEventListener("click", function () {
       const newTaskTitle = document.getElementById("taskTitle").value;
       dailyTasks.forEach((tassk) => (tassk.title = newTaskTitle));
       saveData();
       displayTasks();
-
 
       document.getElementById("addTaskButton").style.display = "block";
       document.getElementById("taskName").style.display = "block";
@@ -153,7 +137,6 @@ function EditTitleText(inputTaskTitle, index) {
       document.getElementById("taskLink").style.display = "block";
       document.getElementById("updateTitleButton").style.display = "none";
     });
-   
 }
 // function updateTaskTitle(index){
 //   // const newtaskTitle = document.getElementById('updateTitleButton')
@@ -172,21 +155,31 @@ function updateTask(taskName, taskStatus, taskLink, index) {
   tasksLink.value = taskLink;
 
   // console.log(index)
-  const updatedTask = {taskName : tasksName , taskStatus : tasksStatus , taskLink : tasksStatus}
+  const updatedTask = {
+    taskName: tasksName,
+    taskStatus: tasksStatus,
+    taskLink: tasksStatus,
+  };
 
-  document.getElementById("updateTaskButton").addEventListener("click", function () {
+  document
+    .getElementById("updateTaskButton")
+    .addEventListener("click", function () {
       // console.log(updatedTask)
       updateTaskItem(index);
     });
 }
 // document.getElementById('updateTaskButton').addEventListener('click',upada)
 function updateTaskItem(index) {
-  console.log(index)
+  console.log(index);
   const taskName = document.getElementById("taskName").value;
   const taskStatus = document.getElementById("taskStatus").value;
   const taskLink = document.getElementById("taskLink").value;
-  const newUpdatedTask = { taskName : taskName, taskStatus: taskStatus, taskLink :taskLink };
-  console.log(newUpdatedTask)
+  const newUpdatedTask = {
+    taskName: taskName,
+    taskStatus: taskStatus,
+    taskLink: taskLink,
+  };
+  console.log(newUpdatedTask);
   // dailyTasks.forEach((task) => (task.tasks[index] = newUpdatedTask));
   // // dailyTasks.tasks[index] = newUpdatedTask;
   // saveData();
@@ -242,7 +235,7 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
   const taskStatus = document.getElementById("taskStatus").value;
   const taskLink = document.getElementById("taskLink").value;
   const date = new Date().toLocaleDateString();
-  // const date = 9/10/2023;
+  // const inputDate = 9/10/2023;
 
   // console.log(date)
   // 10/10/2023
@@ -258,12 +251,72 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
 
 // Modal
 
-function openEditModal() {
-  const closeModalButton = document.getElementById("closeModal");
-  closeModalButton.addEventListener("click", function () {
-    const editModal = document.getElementById("editModal");
-    editModal.style.display = "none";
+// new modal
+document.getElementById("showModal").addEventListener("click", function () {
+  document.getElementById("popup-1").classList.toggle("active");
+  const dailyTaskTitle = document.getElementById("daily-task-title");
+  
+  const today = dailyTasks?.find((dailytask) => dailytask.date == new Date().toLocaleDateString());
+  console.log(today);
+  dailyTaskTitle.innerHTML = today?.title;
+
+  const todayTaskContainer = document.getElementById("todayTask");
+  today?.tasks.forEach((task) => {
+    const li = document.createElement("li");
+    // console.log(task)
+    li.innerHTML = `
+    <span>${task.taskName}</span> - <span>${task.taskStatus}</span>  - 
+    <a href="${task.taskLink}">Link</a>
+    `;
+    todayTaskContainer.appendChild(li);
   });
+
+  const yserdayDate = document.getElementById("yesterdayTask");
+  const checkDate = new Date().toLocaleDateString();
+  // const allDate = dailyTasks?.map((dailyTask) =>
+  //  isYesterday()
+    
+  // );
+  isYesterday();
+});
+
+document.getElementById("closeModal").addEventListener("click", function () {
+  document.getElementById("popup-1").classList.toggle("active");
+  const todayTaskContainer = document.getElementById("todayTask");
+  todayTaskContainer.innerHTML = "";
+  document.getElementById("yesterdayTask").innerHTML = ""
+});
+
+function isYesterday() {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() - 1);
+  const targetDate = formatDate(tomorrow);
+
+  // Function to format a Date object as 'dd/mm/yy'
+  function formatDate(date) {
+    const dd = date.getDate().toString().padStart(2, "0");
+    const mm = (date.getMonth() + 1).toString().padStart(2, "0");
+    const yyyy = date.getFullYear().toString(); // Get the last two digits of the year
+    // console.log( (`${dd}/${mm}/${yyyy}`))
+    const yserdayDate = document.getElementById("yesterdayTask");
+    const yesterdayTask = dailyTasks.find(tasks => tasks.date == (`${dd}/${mm}/${yyyy}`))
+    yesterdayTask?.tasks.forEach(task => {
+      const li = document.createElement("li");  
+      // console.log(task)
+      li.innerHTML = `
+      <span>${task.taskName}</span> - <span>${task.taskStatus}</span>  - 
+      <a href="${task.taskLink}">Link</a>
+
+      `;
+      yserdayDate.appendChild(li);
+    })
+    
+
+  }
+
+  // var yesterday = new Date(inputDate).toLocaleDateString();
+  // return inputDate === yesterday;
 }
 
 // modal functionallity//
