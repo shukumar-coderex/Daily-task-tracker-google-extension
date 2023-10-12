@@ -27,10 +27,8 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
     return alert("Get the valid input!!");
   }
 
-  // Find the daily task by title
-  // let dailyTaskTitle = dailyTasks.find((task) => task.title === taskTitle);
+
   let dailyTask = dailyTasks.find((task) => task.date === date);
-  // console.log(dailyTasks);
   if (!dailyTask) {
     dailyTask = {
       title: taskTitle,
@@ -64,8 +62,11 @@ function displayTasks() {
     deleteBtn.addEventListener("click", function () {
       deleteTask(dailyTask.title);
     });
-    titleEdit.addEventListener("click", function () {
-      EditTitleText(dailyTask.title, index);
+
+  
+
+    titleEdit.addEventListener("click", function() {
+      handleEditClick(dailyTask.title, index);
     });
 
     const tasksList = document.createElement("ul");
@@ -73,30 +74,13 @@ function displayTasks() {
     dailyTask.tasks.forEach((task, index) => {
       const taskItem = document.createElement("li");
       taskItem.innerHTML = `
-                     ${task.taskName}
-                    ${task.taskStatus}
-                     <a href="${task.taskLink}" target="_blank">${task.taskLink}</a>
-                     <button class="editBtn" data-index="${index}">Edit</button>
+                     ${task.taskName} -
+                    ${task.taskStatus} -
+                     <a href="${task.taskLink}" target="_blank">Link</a>
                      <button class="deleteBtn">Delete</button>
                 `;
 
-      const editBtn = taskItem.querySelector(".editBtn");
-      editBtn.addEventListener("click", function () {
-        updateTask(task.taskName, task.taskStatus, task.taskLink, index);
-      });
-
-      // const editBtn = taskItem.querySelector(".editBtn");
-
-      // // Attach the click event listener to the edit button
-      // editBtn.addEventListener("click", function () {
-
-      //   updateTask(task.taskName, task.taskStatus, task.taskLink, index, taskIndex);
-      // });
-
-      // editBtn.addEventListener("click", function () {
-      //   fillInputFieldsForEdit(task.taskName, task.taskStatus, task.taskLink);
-      //   document.getElementById("updateTaskButton").style.display = "block";
-      // });
+     
 
       const deleteBtn = taskItem.querySelector(".deleteBtn");
       deleteBtn.addEventListener("click", function () {
@@ -111,86 +95,60 @@ function displayTasks() {
   });
 }
 
-function EditTitleText(inputTaskTitle, index) {
+
+
+
+function handleEditClick(inputTaskTitle, index) {
   document.getElementById("addTaskButton").style.display = "none";
   document.getElementById("updateTaskButton").style.display = "none";
   document.getElementById("taskName").style.display = "none";
   document.getElementById("taskStatus").style.display = "none";
   document.getElementById("taskLink").style.display = "none";
-  document.getElementById("updateTitleButton").style.display = "block";
-  // console.log(inputTaskTitle, index);
 
-  // // console.log(taskTitle)
+    document.getElementById('standupTitle').style.display = "none";
+  document.getElementById('standupName').style.display = "none";
+  document.getElementById('standupStatus').style.display = "none";
+  document.getElementById('standupLink').style.display = "none";
+
+  document.getElementById("updateTitleButton").style.display = "block";
+
   const newTaskTitle = document.getElementById("taskTitle");
   newTaskTitle.value = inputTaskTitle;
-  document
-    .getElementById("updateTitleButton")
-    .addEventListener("click", function () {
-      const newTaskTitle = document.getElementById("taskTitle").value;
-      dailyTasks.forEach((tassk) => (tassk.title = newTaskTitle));
-      saveData();
-      displayTasks();
 
-      document.getElementById("addTaskButton").style.display = "block";
-      document.getElementById("taskName").style.display = "block";
-      document.getElementById("taskStatus").style.display = "block";
-      document.getElementById("taskLink").style.display = "block";
-      document.getElementById("updateTitleButton").style.display = "none";
-    });
+  document.getElementById("updateTitleButton").addEventListener("click", function() {
+    const newTaskTitleValue = document.getElementById("taskTitle").value;
+    updateTaskTitle(inputTaskTitle, newTaskTitleValue, index);
+
+    document.getElementById("addTaskButton").style.display = "block";
+    document.getElementById("taskName").style.display = "block";
+    document.getElementById("taskStatus").style.display = "block";
+    document.getElementById("taskLink").style.display = "block";
+    document.getElementById("updateTitleButton").style.display = "none";
+  });
 }
-// function updateTaskTitle(index){
-//   // const newtaskTitle = document.getElementById('updateTitleButton')
-//   console.log('click')
-// }
 
-function updateTask(taskName, taskStatus, taskLink, index) {
-  // console.log(taskName, taskStatus,taskLink,index);
-  document.getElementById("addTaskButton").style.display = "none";
-  document.getElementById("updateTaskButton").style.display = "block";
-  const tasksName = document.getElementById("taskName");
-  const tasksStatus = document.getElementById("taskStatus");
-  const tasksLink = document.getElementById("taskLink");
-  tasksName.value = taskName;
-  tasksStatus.value = taskStatus;
-  tasksLink.value = taskLink;
 
-  // console.log(index)
-  const updatedTask = {
-    taskName: tasksName,
-    taskStatus: tasksStatus,
-    taskLink: tasksStatus,
-  };
 
-  document
-    .getElementById("updateTaskButton")
-    .addEventListener("click", function () {
-      // console.log(updatedTask)
-      updateTaskItem(index);
-    });
+//UPDATE STANDUP TITLE
+function updateTaskTitle(oldTitle, newTitle, index) {
+  const dailyTask = dailyTasks.find((task) => task.title === oldTitle);
+
+  if (dailyTask) {
+    dailyTask.title = newTitle;
+    const titleElement = document.querySelector(`#taskList div:nth-child(${index + 1}) h2`);
+    if (titleElement) {
+      titleElement.innerText = newTitle;
+    }
+
+    saveData();
+    displayTasks();
+  }
+
 }
-// document.getElementById('updateTaskButton').addEventListener('click',upada)
-function updateTaskItem(index) {
-  console.log(index);
-  const taskName = document.getElementById("taskName").value;
-  const taskStatus = document.getElementById("taskStatus").value;
-  const taskLink = document.getElementById("taskLink").value;
-  const newUpdatedTask = {
-    taskName: taskName,
-    taskStatus: taskStatus,
-    taskLink: taskLink,
-  };
-  console.log(newUpdatedTask);
-  // dailyTasks.forEach((task) => (task.tasks[index] = newUpdatedTask));
-  // // dailyTasks.tasks[index] = newUpdatedTask;
-  // saveData();
-  // displayTasks();
-  document.getElementById("addTaskButton").style.display = "block";
-  document.getElementById("updateTaskButton").style.display = "none";
 
-  // document.getElementById("taskName").value = "";
-  // document.getElementById("taskStatus").value = "";
-  // document.getElementById("taskLink").value = "";
-}
+
+
+
 
 function deleteSingleTask(taskTitle, taskName) {
   const dailyTask = dailyTasks.find((task) => task.title === taskTitle);
@@ -235,10 +193,10 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
   const taskStatus = document.getElementById("taskStatus").value;
   const taskLink = document.getElementById("taskLink").value;
   const date = new Date().toLocaleDateString();
-  // const inputDate = 9/10/2023;
 
-  // console.log(date)
-  // 10/10/2023
+  if (!isValidURL(taskLink)) {
+    return alert("Enter valid url");
+  } 
 
   addTask(taskTitle, taskName, taskStatus, taskLink, date);
 
@@ -249,21 +207,19 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
   document.getElementById("taskLink").value = "";
 });
 
-// Modal
 
-// new modal
+
+// MODAL FOR DAILY STANDUP
 document.getElementById("showModal").addEventListener("click", function () {
   document.getElementById("popup-1").classList.toggle("active");
   const dailyTaskTitle = document.getElementById("daily-task-title");
   
   const today = dailyTasks?.find((dailytask) => dailytask.date == new Date().toLocaleDateString());
-  console.log(today);
   dailyTaskTitle.innerHTML = today?.title;
 
   const todayTaskContainer = document.getElementById("todayTask");
   today?.tasks.forEach((task) => {
     const li = document.createElement("li");
-    // console.log(task)
     li.innerHTML = `
     <span>${task.taskName}</span> - <span>${task.taskStatus}</span>  - 
     <a href="${task.taskLink}">Link</a>
@@ -273,10 +229,6 @@ document.getElementById("showModal").addEventListener("click", function () {
 
   const yserdayDate = document.getElementById("yesterdayTask");
   const checkDate = new Date().toLocaleDateString();
-  // const allDate = dailyTasks?.map((dailyTask) =>
-  //  isYesterday()
-    
-  // );
   isYesterday();
 });
 
@@ -298,12 +250,10 @@ function isYesterday() {
     const dd = date.getDate().toString().padStart(2, "0");
     const mm = (date.getMonth() + 1).toString().padStart(2, "0");
     const yyyy = date.getFullYear().toString(); // Get the last two digits of the year
-    // console.log( (`${dd}/${mm}/${yyyy}`))
     const yserdayDate = document.getElementById("yesterdayTask");
     const yesterdayTask = dailyTasks.find(tasks => tasks.date == (`${dd}/${mm}/${yyyy}`))
     yesterdayTask?.tasks.forEach(task => {
       const li = document.createElement("li");  
-      // console.log(task)
       li.innerHTML = `
       <span>${task.taskName}</span> - <span>${task.taskStatus}</span>  - 
       <a href="${task.taskLink}">Link</a>
@@ -315,40 +265,64 @@ function isYesterday() {
 
   }
 
-  // var yesterday = new Date(inputDate).toLocaleDateString();
-  // return inputDate === yesterday;
 }
 
-// modal functionallity//
 
-// Function to open the edit modal
-// function openEditModal(dailyTask,index) {
-//   const modal = document.getElementById("editModal");
-//   modal.style.display = "block";
 
-//   // Fill the input fields with task data
-//   document.getElementById("editedName").value = taskName;
 
-//   // Add event listener to the update button
-//   const saveEditButton = document.getElementById("saveEditButton");
-//   saveEditButton.addEventListener("click", function () {
-//       saveEditedTask(taskTitle, taskName);
-//   });
-// }
+// check input value url or not 
+function isValidURL(url) {
+  const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  return pattern.test(url);
+}
 
-// // Function to close the edit modal
-// function closeEditModal() {
-//   const modal = document.getElementById("editModal");
-//   modal.style.display = "none";
-// }
 
-// // Function to save the edited task
-// function saveEditedTask(taskTitle, taskName) {
-//   const editedName = document.getElementById("editedName").value;
 
-//   // Update the task data and save it (you can implement this part)
-//   // ...
 
-//   // Close the edit modal
-//   closeEditModal();
-// }
+// Implement input field validation for task status and task link filed.
+
+const taskName = document.getElementById("taskName");
+const taskStatus = document.getElementById("taskStatus");
+const taskLink = document.getElementById("taskLink");
+const addTaskButton = document.getElementById("addTaskButton");
+
+taskName.addEventListener("input", checkInputs);
+taskStatus.addEventListener("input", checkInputs);  
+taskLink.addEventListener("input", checkInputs);
+
+function checkInputs() {
+  
+  if ( taskStatus.value.trim() === '' || taskLink.value.trim() === '') {
+    addTaskButton.style.cursor = 'not-allowed';
+    addTaskButton.disabled = true;
+  } else {
+    addTaskButton.style.cursor= "pointer";
+    addTaskButton.disabled = false;
+  }
+}
+
+checkInputs();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

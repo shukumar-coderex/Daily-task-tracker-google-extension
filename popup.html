@@ -10,9 +10,33 @@
    <div class="container">
     <div class="">
       <h2 class="task-heading">Daily Task</h2>
-      <input type="text" id="taskTitle" placeholder="Stundup Title" />
+      <div class="task-label" id="standupTitle">
+        <label for="Task Title">Standup Title</label>
+        <div class="help-tip">
+          <p>Write your daily standup title.and you can able to write one Standup title for a day</p>
+        </div>
+      </div>
+      <input type="text" id="taskTitle" class="input-text" placeholder="Standup Title" />
+      <div class="task-label" id="standupName">
+        <label for="Task Title">Task Name</label>
+        <div class="help-tip">
+          <p>Write your task name and you can delete your task.</p>
+        </div>
+      </div>
       <input type="text" id="taskName" placeholder="Enter Task Name" />
+      <div class="task-label" id="standupStatus">
+        <label for="Task Title">Task Status</label>
+        <div class="help-tip">
+          <p>Write your task status. Task status will be pending, progress or complete</p>
+        </div>
+      </div>
       <input type="text" id="taskStatus" placeholder="Enter Task Status" />
+      <div class="task-label" id="standupLink">
+        <label for="Task Title">Task Link</label>
+        <div class="help-tip">
+          <p>Write your task link.</p>
+        </div>
+      </div>
       <input type="text" id="taskLink" placeholder="Enter Task Link" />
       <button id="addTaskButton" class="btn-primary">Add Task</button>
       <button id="updateTaskButton" class="btn-primary">Update Task</button>
@@ -25,7 +49,7 @@
    </div>
 
 
-
+<!-- Modal for show daily task -->
    <div class="modal-popup" id="popup-1">
     <div class="overly" ></div>
     <div class="content">
@@ -46,125 +70,3 @@
     <script src="new.js"></script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-    <title>Task Manager</title>
-</head>
-<link rel="stylesheet" href="style.css">
-
-<body>
-    <div class="container">
-        <div>
-            <h2>Task List</h2>
-            
-                <ul id="taskList"></ul>
-            
-        </div>
-        <div>
-            <input type="text" id="taskTitle" placeholder="Task Title"><br>
-            <input type="text" id="taskName" placeholder="Task Name"><br>
-            <select id="taskStatus">
-                <option value="Pending">Pending</option>
-                <option value="InProgress">In Progress</option>
-                <option value="Completed">Completed</option>
-            </select><br>
-            <button id="addTaskBtn">Add Task</button>
-            <button id="updateTaskBtn" style="display:none;">Update Task</button>
-            <button class="show-modal">Show format</button>
-        </div>
-        
-
-    </div>
-  
-    <div>
-       <button class="show-modal">Show modal 1</button> -->
-
-<!-- <div class="modal hidden">
-      <button class="close-modal">&times;</button>
-      <h1 class="">I'm a modal window</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
-    </div>
-    <div class="overlay hidden"></div>
-    </div>
-    <script src="popup.js"></script>
-</body>
-
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Task</title>
-    <link rel="stylesheet" href="popup.css" />
-  </head>
-  <body>
-    <div class="main-container">
-      <div id="task-container">
-        <h1>Daily Task</h1>
-        <form>
-          <input type="text" id="task-title" placeholder="Task title" />
-          <input type="text" id="task-name" placeholder="Task name" />
-          <select id="taskStatus">
-            <option value="pending">Pending</option>
-            <option value="In progress">In Progress</option>
-            <option value="completed">Completed</option>
-          </select>
-          <button id="addTask" type="button" >
-            Add Task
-          </button>
-        </form>
-
-        <button id="showTask">show Task</button>
-      </div>
-
-      <div>
-        <h4 id="task-title-content"></h4>
-        <h4>What I have do today</h4>
-        <div id="show-task"></div>
-      </div>
-    </div>
-
-    <script src="popup.js"></script>
-  </body>
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
-</head>
-<body>
-    <h1>Task Manager</h1>
-    <input type="text" id="taskTitle" placeholder="Enter Task Title">
-    <input type="text" id="taskName" placeholder="Enter Task Name">
-    <input type="text" id="taskStatus" placeholder="Enter Task Status">
-    <button id="addTaskButton">Add Task</button>
-
-    <ul id="taskList"></ul>
-
-    <script src="popup.js"></script>
-</body>
-</html> -->
