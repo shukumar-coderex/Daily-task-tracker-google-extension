@@ -1,0 +1,283 @@
+
+ 
+  .container{
+    display: flex;
+    justify-content: space-between;
+    gap:50px;
+    width: auto;
+    padding: 30px;
+  }
+  #tasks{
+    width: 580px;
+  }
+
+  .task-heading{
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+ 
+  
+  input, select, button {
+    display: block;
+    margin-bottom: 10px;
+  }
+ 
+  .task-container {
+    text-align: center;
+  }
+  .display-task{
+    display: flex;
+  }
+  .edit-button, .delete-button{
+    border: none;
+    display: inline;
+    cursor: pointer;
+  }
+ul > li{
+    display: flex;
+    gap: 5px;
+  }
+
+  /* modal */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+  }
+  
+ 
+  body {
+    font-family: sans-serif;
+    color: #333;
+    /* line-height: 1.5; */
+    height: 100vh;
+    position: relative;
+    align-items: flex-start;
+    justify-content: center;
+    /* background: linear-gradient(to top left, #28b487, #7dd56f); */
+  }
+ 
+
+ 
+ .task-day{
+  padding-top: 10px;
+  margin-left: 12px;
+ }
+  
+  
+ 
+  
+.TitleEdit{
+  border: none;
+  color: green;
+  margin-right: 5px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+  .deleteBtn{
+    border: none;
+    color: red;
+    margin-right: 5px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .title-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+
+
+
+/* Style for input fields and update button */
+input[type="text"] {
+  width: 190px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+button#saveEditButton {
+  background-color: #008CBA;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+button#saveEditButton:hover {
+  background-color: #005A7F;
+}
+
+
+/* modal css */
+.modal-popup .overly{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background:rgb(0,0,0,0.7);
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  display: none;
+}
+.modal-popup .content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%)scale(0);
+  width: 600px;
+  height: 80vh; 
+  background: #fff;
+  z-index: 2;
+  /* text-align:center; */
+
+  box-sizing: border-box;
+  padding: 10px;
+}
+.modal-popup .close-btn{
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  background: #222;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 30px;
+}
+.modal-popup.active .overly{
+  display: block;
+}
+.modal-popup.active .content{
+  transform: translate(-50%,-50%)scale(1);
+  transition: all 300ms ease-in-out;
+}
+#daily-task-title{
+  margin-top: 40px; 
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+.task-day{
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#yesterdayTask{
+  margin-top: 10px;
+  margin-left: 10px;
+}
+#yesterdayTask>li, #todayTask>li{
+  font-size: 15px;
+  margin: 2px 0;
+  margin-bottom: 6px;
+  margin-left: 10px;
+}
+
+
+/* primary btn */
+.btn-primary{
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  background: blue;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal-popup .content{
+  padding-left:10px;
+}
+
+
+/* input filed tooltip */
+  .task-label{
+    display: flex;
+    justify-content: space-between;
+      font-size: 15px;    
+      font-weight: bold;
+      padding: 5px 0px;
+  } 
+
+
+
+
+
+.help-tip {
+
+  text-align: center;
+  background-color: #5c5e5f;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  font-size: 10px;
+  line-height: 17px;
+  cursor: default;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.help-tip:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.help-tip:before {
+  content: '?';
+  font-weight: 700;
+  color: #fff;
+}
+
+.help-tip p {
+  visibility: hidden;
+  opacity: 0;
+  text-align: left;
+  left: 30px;
+  background-color: #5c5e5f;
+  padding: 10px;
+  width: 190px;
+  position: absolute;
+  border-radius: 4px;
+  /* right: -4px; */
+  color: #fff;
+  font-size: 13px;
+  line-height: normal;
+  transform: scale(0.7);
+  /* transform-origin: 100% 0%; */
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.help-tip:hover p {
+  cursor: default;
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+
+.help-tip p:after {
+  width: 100%;
+  height: 40px;
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+}
+
+.help-tip a {
+  color: #fff;
+  font-weight: 700;
+}
+
+.help-tip a:hover, .help-tip a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+
