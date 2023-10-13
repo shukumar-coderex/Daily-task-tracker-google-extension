@@ -8,7 +8,7 @@
     padding: 30px;
   }
   #tasks{
-    width: 580px;
+    width: 700px;
     height: 330px;
     overflow: auto;
   }
@@ -53,8 +53,8 @@ ul > li{
     font-family: sans-serif;
     color: #333;
     /* line-height: 1.5; */
-    /* height: 100vh; */
-    position: relative;
+    height: 97vh;
+    position: relative; 
     align-items: flex-start;
     justify-content: center;
   }
@@ -142,6 +142,7 @@ button#saveEditButton:hover {
   transform: translate(-50%,-50%)scale(0);
   width: 600px;
   height: 80vh; 
+  overflow-y: auto;
   background: #fff;
   z-index: 2;
   /* text-align:center; */
@@ -297,7 +298,7 @@ button#saveEditButton:hover {
 
 /* show toast css */
 
-#toastBox{
+/* #toastBox{
   position: absolute;
   bottom: 30px;
   right: 30px; 
@@ -309,6 +310,6 @@ button#saveEditButton:hover {
 }
 .toast{
 
-}
+} */
 
 
