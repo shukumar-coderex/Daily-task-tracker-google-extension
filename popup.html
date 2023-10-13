@@ -64,15 +64,26 @@
       <div class="overly"></div>
       <div class="content">
         <div class="close-btn" id="closeModal">&times;</div>
-        <div id="copy-content">
-          <h3 id="daily-task-title"></h3>
+        <div >
+          <div id="task-title-container">
+            <h3 id="daily-task-title"></h3>
+            <button id="copy-title" class="btn-primary">Copy Title</button>
+          </div>
+         <div id="copy-content">  
           <span class="task-day" id="aaa">What did I do Yesterday </span>
           <ul id="yesterdayTask"></ul>
           <p class="task-day">What will I do today?</p>
           <ul id="todayTask"></ul>
+         </div>
         </div>
         <button id="copy-btn" class="btn-primary">Copy Text</button>
       </div>
+    </div>
+
+
+    <!-- show toast for copy text -->
+    <div id="toastBox">
+
     </div>
 
     <script src="new.js"></script>

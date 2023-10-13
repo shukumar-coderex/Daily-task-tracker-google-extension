@@ -332,10 +332,12 @@ function standupTitleHide(){
 
 
 
-// copy the all post form modal
+// copy task from modal and standup title
 document.addEventListener('DOMContentLoaded',function(){
   const copyBtn =  document.getElementById('copy-btn');
   const copyText = document.getElementById('copy-content');
+  const copyTaskTitleBtn = document.getElementById('copy-title');
+  const standupTitleText = document.getElementById('daily-task-title');
   copyBtn.addEventListener('click',function(){
     const range = document.createRange()
     range.selectNode(copyText);
@@ -346,7 +348,24 @@ document.addEventListener('DOMContentLoaded',function(){
 
     window.getSelection().removeAllRanges();
   })
+  copyTaskTitleBtn.addEventListener('click', function(){
+    const range = document.createRange();
+    range.selectNode(standupTitleText);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges()
+  })
+
 })
+//show toast for copy text
+document.getElementById('copy-title').addEventListener('click',function(){
+  const toastContainer = document.getElementById('toastBox');
+  let toast = document.createElement('div');
+  toast.classList.add('toast');
+  toast.innerHTML = "Text Copy Successfully"
+  toastContainer.appendChild(toast)
+})
+
 
 
 
