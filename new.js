@@ -3,11 +3,20 @@ let dailyTasks = [];
 document.getElementById("updateTaskButton").style.display = "none";
 document.getElementById("updateTitleButton").style.display = "none";
 
+
+
+
 // Load data from Chrome extension storage on page load
 chrome.storage.local.get({ dailyTasks: [] }, function (result) {
   dailyTasks = result.dailyTasks;
   displayTasks();
 });
+
+
+
+
+
+
 
 // Function to save data to Chrome extension storage
 function saveData() {
@@ -15,6 +24,8 @@ function saveData() {
     console.log("Data saved successfully.");
   });
 }
+
+
 
 // Function to add a task
 function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
@@ -26,6 +37,7 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
   if (!taskName || !taskStatus || !taskLink) {
     return alert("Get the valid input!!");
   }
+
 
 
   let dailyTask = dailyTasks.find((task) => task.date === date);
@@ -47,6 +59,7 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
 function displayTasks() {
   const taskList = document.getElementById("taskList");
   taskList.innerHTML = "";
+  standupTitleHide()
 
   dailyTasks.forEach((dailyTask, index) => {
     const listItem = document.createElement("div");
@@ -165,6 +178,7 @@ function deleteSingleTask(taskTitle, taskName) {
 function deleteTask(title) {
   dailyTasks = dailyTasks.filter((task) => task.title !== title);
   saveData();
+  standupTitleHide()
   displayTasks();
 }
 
@@ -206,6 +220,7 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
   document.getElementById("taskStatus").value = "";
   document.getElementById("taskLink").value = "";
 });
+
 
 
 
@@ -304,6 +319,15 @@ function checkInputs() {
 checkInputs();
 
 
+// Standup title will appear for first time data added
+
+function standupTitleHide(){
+  const today = dailyTasks?.find((dailytask) => dailytask.date == new Date().toLocaleDateString());
+  if(today){
+    document.getElementById('taskTitle').style.display = "none";
+    document.getElementById('standupTitle').style.display = "none"
+  }
+}
 
 
 
