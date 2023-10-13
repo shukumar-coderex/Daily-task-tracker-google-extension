@@ -44,6 +44,7 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
 
 // Function to display tasks
 function displayTasks() {
+  standupTitleHide(true)
   const taskList = document.getElementById("taskList");
   taskList.innerHTML = "";
   dailyTasks.forEach((dailyTask, index) => {
@@ -63,6 +64,7 @@ function displayTasks() {
 
     titleEdit.addEventListener("click", function () {
       handleEditClick(dailyTask.title, index);
+      standupTitleHide(false)
     });
 
     const tasksList = document.createElement("ul");
@@ -121,6 +123,8 @@ function handleEditClick(inputTaskTitle, index) {
     });
 }
 
+
+
 //UPDATE STANDUP TITLE
 function updateTaskTitle(oldTitle, newTitle, index) {
   const dailyTask = dailyTasks.find((task) => task.title === oldTitle);
@@ -151,11 +155,15 @@ function deleteSingleTask(taskTitle, taskName) {
   }
 }
 
+
+//Delete a single task 
 function deleteTask(title) {
   dailyTasks = dailyTasks.filter((task) => task.title !== title);
   saveData();
   displayTasks();
 }
+
+
 
 // Function to save an updated task
 function saveTask(taskTitle, taskName) {
@@ -174,6 +182,8 @@ function saveTask(taskTitle, taskName) {
     displayTasks();
   }
 }
+
+
 
 // Add an event listener to the "Add Task" button
 document.getElementById("addTaskButton").addEventListener("click", function () {
@@ -195,6 +205,8 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
   document.getElementById("taskStatus").value = "";
   document.getElementById("taskLink").value = "";
 });
+
+
 
 // MODAL FOR DAILY STANDUP
 document.getElementById("showModal").addEventListener("click", function () {
@@ -228,11 +240,16 @@ document.getElementById("closeModal").addEventListener("click", function () {
   document.getElementById("yesterdayTask").innerHTML = "";
 });
 
+
+
+// Check date 
 function isYesterday() {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() - 1);
   const targetDate = formatDate(tomorrow);
+
+
 
   // Function to format a Date object as 'dd/mm/yy'
   function formatDate(date) {
@@ -255,11 +272,15 @@ function isYesterday() {
   }
 }
 
+
+
 // check input value url or not
 function isValidURL(url) {
   const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
   return pattern.test(url);
 }
+
+
 
 // Implement input field validation for task status and task link filed.
 
@@ -284,20 +305,27 @@ function checkInputs() {
 
 checkInputs();
 
+
+standupTitleHide(true)
 // Standup title will appear for first time data added
 
-function standupTitleHide() {
+function standupTitleHide(isVisibale) {
+  chrome.storage.local.get({ dailyTasks: [] }, function (result) {
+    const findDate = result.dailyTasks.find((dailytask) => dailytask.date == new Date().toLocaleDateString())
+    if(isVisibale){
+      if(findDate){
+        document.getElementById("taskTitle").style.display = "none";
+        document.getElementById("standupTitle").style.display = "none";
+      }
+    }else{
+      document.getElementById("taskTitle").style.display = "block";
+      document.getElementById("standupTitle").style.display = "block";
+    }
+    
+  });
   
-    document.getElementById("taskTitle").style.display = "block";
-    document.getElementById("standupTitle").style.display = "block";
   
-  const today = dailyTasks?.find(
-    (dailytask) => dailytask.date == new Date().toLocaleDateString()
-  );
-  if (today) {
-    document.getElementById("taskTitle").style.display = "none";
-    document.getElementById("standupTitle").style.display = "none";
-  }
+  
 }
 
 // copy task from modal and standup title
