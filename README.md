@@ -1,5 +1,12 @@
 # Daily-task-tracker-google-extension
 
+# How to use this google extention ?
+
+- Clone this code locally.
+- Open google chrome browser and go to manage extention and enabled developer mode.
+- Open Loaad unpacked and select the Daily-task-tracker file.
+
+
 The Daily Task Tracker Chrome extension is designed to help users organize their daily tasks efficiently and generate a structured report for daily standup meetings. This extension allows you to input task titles, task names, and their respective statuses.
 
 
