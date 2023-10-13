@@ -4,69 +4,76 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daily Task Manager</title>
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-   <div class="container">
-    <div class="">
-      <h2 class="task-heading">Daily Task</h2>
-      <div class="task-label" id="standupTitle">
-        <label for="Task Title">Standup Title</label>
-        <div class="help-tip">
-          <p>Write your daily standup title.and you can able to write one Standup title for a day</p>
+    <div class="container">
+      <div class="">
+        <h2 class="task-heading">Daily Task</h2>
+        <div class="task-label" id="standupTitle">
+          <label for="Task Title">Standup Title</label>
+          <div class="help-tip">
+            <p>
+              Write your daily standup title.and you can able to write one
+              Standup title for a day
+            </p>
+          </div>
         </div>
-      </div>
-      <input type="text" id="taskTitle" class="input-text" placeholder="Standup Title" />
-      <div class="task-label" id="standupName">
-        <label for="Task Title">Task Name</label>
-        <div class="help-tip">
-          <p>Write your task name and you can delete your task.</p>
+        <input
+          type="text"
+          id="taskTitle"
+          class="input-text"
+          placeholder="Standup Title"
+        />
+        <div class="task-label" id="standupName">
+          <label for="Task Title">Task Name</label>
+          <div class="help-tip">
+            <p>Write your task name and you can delete your task.</p>
+          </div>
         </div>
-      </div>
-      <input type="text" id="taskName" placeholder="Enter Task Name" />
-      <div class="task-label" id="standupStatus">
-        <label for="Task Title">Task Status</label>
-        <div class="help-tip">
-          <p>Write your task status. Task status will be pending, progress or complete</p>
+        <input type="text" id="taskName" placeholder="Enter Task Name" />
+        <div class="task-label" id="standupStatus">
+          <label for="Task Title">Task Status</label>
+          <div class="help-tip">
+            <p>
+              Write your task status. Task status will be pending, progress or
+              complete
+            </p>
+          </div>
         </div>
-      </div>
-      <input type="text" id="taskStatus" placeholder="Enter Task Status" />
-      <div class="task-label" id="standupLink">
-        <label for="Task Title">Task Link</label>
-        <div class="help-tip">
-          <p>Write your task link.</p>
+        <input type="text" id="taskStatus" placeholder="Enter Task Status" />
+        <div class="task-label" id="standupLink">
+          <label for="Task Title">Task Link</label>
+          <div class="help-tip">
+            <p>Write your task link.</p>
+          </div>
         </div>
+        <input type="text" id="taskLink" placeholder="Enter Task Link" />
+        <button id="addTaskButton" class="btn-primary">Add Task</button>
+        <button id="updateTaskButton" class="btn-primary">Update Task</button>
+        <button id="updateTitleButton" class="btn-primary">Update Title</button>
+        <button id="showModal" class="btn-primary">Show Today Task</button>
       </div>
-      <input type="text" id="taskLink" placeholder="Enter Task Link" />
-      <button id="addTaskButton" class="btn-primary">Add Task</button>
-      <button id="updateTaskButton" class="btn-primary">Update Task</button>
-      <button id="updateTitleButton" class="btn-primary">Update Title</button>
-      <button id="showModal" class="btn-primary ">Show Today Task</button>
+      <div id="tasks">
+        <ul id="taskList"></ul>
+      </div>
     </div>
-    <div id="tasks">
-      <ul id="taskList"></ul>
-    </div>
-   </div>
 
-
-<!-- Modal for show daily task -->
-   <div class="modal-popup" id="popup-1">
-    <div class="overly" ></div>
-    <div class="content">
-      <div class="close-btn" id="closeModal">&times;</div>
-      <h3 id="daily-task-title"></h3>
-      <span class="task-day">What did I do Yesterday</span>
-      <ul id="yesterdayTask">
-      
-      </ul>
-      <p class="task-day">What will I do today?</p>
-      <ul id="todayTask">
-        
-      </ul> 
-      
+    <!-- Modal for show daily task -->
+    <div class="modal-popup" id="popup-1">
+      <div class="overly"></div>
+      <div class="content">
+        <div class="close-btn" id="closeModal">&times;</div>
+        <div id="copy-content">
+          <h3 id="daily-task-title"></h3>
+          <span class="task-day" id="aaa">What did I do Yesterday </span>
+          <ul id="yesterdayTask"></ul>
+          <p class="task-day">What will I do today?</p>
+          <ul id="todayTask"></ul>
+        </div>
+        <button id="copy-btn" class="btn-primary">Copy Text</button>
+      </div>
     </div>
-  </div>
-  
 
     <script src="new.js"></script>
   </body>

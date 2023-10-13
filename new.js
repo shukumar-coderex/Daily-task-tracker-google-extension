@@ -332,6 +332,25 @@ function standupTitleHide(){
 
 
 
+// copy the all post form modal
+document.addEventListener('DOMContentLoaded',function(){
+  const copyBtn =  document.getElementById('copy-btn');
+  const copyText = document.getElementById('copy-content');
+  copyBtn.addEventListener('click',function(){
+    const range = document.createRange()
+    range.selectNode(copyText);
+    window.getSelection().removeAllRanges();
+
+    window.getSelection().addRange(range)
+    document.execCommand('copy');
+
+    window.getSelection().removeAllRanges();
+  })
+})
+
+
+
+
 
 
 

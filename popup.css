@@ -188,12 +188,18 @@ button#saveEditButton:hover {
   border: none;
   padding: 10px 15px;
   color: white;
-  background: blue;
+  background: #eb573d;
   border-radius: 5px;
   cursor: pointer;
 }
-.modal-popup .content{
-  padding-left:10px;
+
+
+#copy-content{
+  margin-left: 20px;
+}
+#copy-btn{
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 
