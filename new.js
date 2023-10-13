@@ -53,14 +53,23 @@ function displayTasks() {
     <h2>${dailyTask.title}</h2> 
     <button class="deleteBtn">Delete</button>
     <button class="TitleEdit">Edit</button>
+    <button class="addNewDataBtn">Add</button>
     
     </div>
     `;
+
+    const addNewTaskBtn = listItem.querySelector('.addNewDataBtn');
+    addNewTaskBtn.addEventListener('click', function(){
+      addNewTaskData(index)
+    })
+
     const deleteBtn = listItem.querySelector(".deleteBtn");
     const titleEdit = listItem.querySelector(".TitleEdit");
     deleteBtn.addEventListener("click", function () {
       deleteTask(dailyTask.title);
     });
+
+
 
     titleEdit.addEventListener("click", function () {
       handleEditClick(dailyTask.title, index);
@@ -319,7 +328,7 @@ function standupTitleHide(isVisibale) {
       }
     }else{
       document.getElementById("taskTitle").style.display = "block";
-      document.getElementById("standupTitle").style.display = "block";
+      document.getElementById("standupTitle").style.display = "flex";
     }
     
   });
@@ -360,3 +369,40 @@ document.getElementById("copy-title").addEventListener("click", function () {
   toast.innerHTML = "Text Copy Successfully";
   toastContainer.appendChild(toast);
 });
+
+
+function addNewTaskData (index){
+
+
+  document.getElementById('addTaskButton').style.display = "none";
+  
+  // console.log(index)
+  console.log(dailyTasks[index])
+ 
+  document.getElementById('addNewTask').addEventListener('click', function(){
+    const taskName = document.getElementById("taskName").value;
+    const taskStatus = document.getElementById("taskStatus").value;
+    const taskLink = document.getElementById("taskLink").value;
+    console.log(taskName,taskStatus,taskLink)
+    document.getElementById('addNewTask').disabled = true;
+
+    const task = {
+      taskName,
+      taskStatus,
+      taskLink,
+    };
+
+    if (!dailyTasks[index]) {
+      dailyTasks[index] = { task: [] };
+  }
+
+    dailyTasks[index].task.push(task);
+    saveData()
+    displayTasks()
+
+   // Clear input fields or reset as needed
+   document.getElementById("taskName").value = "";
+   document.getElementById("taskStatus").value = "";
+   document.getElementById("taskLink").value = "";
+  })
+}
