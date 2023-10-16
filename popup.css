@@ -265,7 +265,7 @@ button#saveEditButton:hover {
   line-height: normal;
   transform: scale(0.7);
   /* transform-origin: 100% 0%; */
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.2s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .help-tip:hover p {

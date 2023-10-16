@@ -44,7 +44,7 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
 
 // Function to display tasks
 function displayTasks() {
-  standupTitleHide(true)
+  standupTitleHide(true);
   const taskList = document.getElementById("taskList");
   taskList.innerHTML = "";
   dailyTasks.forEach((dailyTask, index) => {
@@ -53,15 +53,22 @@ function displayTasks() {
     <h2>${dailyTask.title}</h2> 
     <button class="deleteBtn">Delete</button>
     <button class="TitleEdit">Edit</button>
-    <button class="addNewDataBtn">Add</button>
+    <button class="addNewDataBtn" >Add ${index}</button>
     
     </div>
     `;
 
-    const addNewTaskBtn = listItem.querySelector('.addNewDataBtn');
-    addNewTaskBtn.addEventListener('click', function(){
-      addNewTaskData(index)
-    })
+    const addNewTaskBtn = listItem.querySelector(".addNewDataBtn");
+    addNewTaskBtn.addEventListener("click", () => {
+      addNewTaskData(index);
+      // console.log(addNewTaskBtn,index)
+    });
+  //   const addNewTaskBtn = listItem.querySelector(".addNewDataBtn");
+  //   const addNewTaskIndex = addNewTaskBtn.dataset.index;
+  // addNewTaskBtn.addEventListener("click", () => {
+  //   addNewTaskData(addNewTaskIndex);
+  // });
+
 
     const deleteBtn = listItem.querySelector(".deleteBtn");
     const titleEdit = listItem.querySelector(".TitleEdit");
@@ -69,11 +76,9 @@ function displayTasks() {
       deleteTask(dailyTask.title);
     });
 
-
-
     titleEdit.addEventListener("click", function () {
       handleEditClick(dailyTask.title, index);
-      standupTitleHide(false)
+      standupTitleHide(false);
     });
 
     const tasksList = document.createElement("ul");
@@ -123,7 +128,6 @@ function handleEditClick(inputTaskTitle, index) {
       const newTaskTitleValue = document.getElementById("taskTitle").value;
       updateTaskTitle(inputTaskTitle, newTaskTitleValue, index);
 
-
       document.getElementById("addTaskButton").style.display = "block";
       document.getElementById("taskName").style.display = "block";
       document.getElementById("taskStatus").style.display = "block";
@@ -131,8 +135,6 @@ function handleEditClick(inputTaskTitle, index) {
       document.getElementById("updateTitleButton").style.display = "none";
     });
 }
-
-
 
 //UPDATE STANDUP TITLE
 function updateTaskTitle(oldTitle, newTitle, index) {
@@ -152,6 +154,7 @@ function updateTaskTitle(oldTitle, newTitle, index) {
   }
 }
 
+// Delete single task function
 function deleteSingleTask(taskTitle, taskName) {
   const dailyTask = dailyTasks.find((task) => task.title === taskTitle);
 
@@ -164,15 +167,12 @@ function deleteSingleTask(taskTitle, taskName) {
   }
 }
 
-
-//Delete a single task 
+//Delete a single task
 function deleteTask(title) {
   dailyTasks = dailyTasks.filter((task) => task.title !== title);
   saveData();
   displayTasks();
 }
-
-
 
 // Function to save an updated task
 function saveTask(taskTitle, taskName) {
@@ -191,8 +191,6 @@ function saveTask(taskTitle, taskName) {
     displayTasks();
   }
 }
-
-
 
 // Add an event listener to the "Add Task" button
 document.getElementById("addTaskButton").addEventListener("click", function () {
@@ -215,8 +213,6 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
   document.getElementById("taskLink").value = "";
 });
 
-
-
 // MODAL FOR DAILY STANDUP
 document.getElementById("showModal").addEventListener("click", function () {
   document.getElementById("popup-1").classList.toggle("active");
@@ -226,6 +222,11 @@ document.getElementById("showModal").addEventListener("click", function () {
     (dailytask) => dailytask.date == new Date().toLocaleDateString()
   );
   dailyTaskTitle.innerHTML = today?.title;
+  if (today?.title) {
+    dailyTaskTitle.innerHTML = today?.title;
+  } else {
+    dailyTaskTitle.innerHTML = "Today Have No Task Title";
+  }
 
   const todayTaskContainer = document.getElementById("todayTask");
   today?.tasks.forEach((task) => {
@@ -249,16 +250,12 @@ document.getElementById("closeModal").addEventListener("click", function () {
   document.getElementById("yesterdayTask").innerHTML = "";
 });
 
-
-
-// Check date 
+// Check date for finding data
 function isYesterday() {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() - 1);
   const targetDate = formatDate(tomorrow);
-
-
 
   // Function to format a Date object as 'dd/mm/yy'
   function formatDate(date) {
@@ -281,15 +278,11 @@ function isYesterday() {
   }
 }
 
-
-
 // check input value url or not
 function isValidURL(url) {
   const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
   return pattern.test(url);
 }
-
-
 
 // Implement input field validation for task status and task link filed.
 
@@ -302,6 +295,7 @@ taskName.addEventListener("input", checkInputs);
 taskStatus.addEventListener("input", checkInputs);
 taskLink.addEventListener("input", checkInputs);
 
+//check input value valid or inValid
 function checkInputs() {
   if (taskStatus.value.trim() === "" || taskLink.value.trim() === "") {
     addTaskButton.style.cursor = "not-allowed";
@@ -314,27 +308,24 @@ function checkInputs() {
 
 checkInputs();
 
+standupTitleHide(true);
 
-standupTitleHide(true)
 // Standup title will appear for first time data added
-
 function standupTitleHide(isVisibale) {
   chrome.storage.local.get({ dailyTasks: [] }, function (result) {
-    const findDate = result.dailyTasks.find((dailytask) => dailytask.date == new Date().toLocaleDateString())
-    if(isVisibale){
-      if(findDate){
+    const findDate = result.dailyTasks.find(
+      (dailytask) => dailytask.date == new Date().toLocaleDateString()
+    );
+    if (isVisibale) {
+      if (findDate) {
         document.getElementById("taskTitle").style.display = "none";
         document.getElementById("standupTitle").style.display = "none";
       }
-    }else{
+    } else {
       document.getElementById("taskTitle").style.display = "block";
       document.getElementById("standupTitle").style.display = "flex";
     }
-    
   });
-  
-  
-  
 }
 
 // copy task from modal and standup title
@@ -361,6 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.getSelection().removeAllRanges();
   });
 });
+
 //show toast for copy text
 document.getElementById("copy-title").addEventListener("click", function () {
   const toastContainer = document.getElementById("toastBox");
@@ -370,39 +362,66 @@ document.getElementById("copy-title").addEventListener("click", function () {
   toastContainer.appendChild(toast);
 });
 
+// added new task for specific date
+function addNewTaskData(index) {
+  document.getElementById("addTaskButton").style.display = "none";
+  document.getElementById("addNewTask").style.display = "block";
 
-function addNewTaskData (index){
+  document.getElementById("addNewTask").addEventListener("click", ()=>handleAddNewTaskClick(index));
 
+  //  Add an event listener to "Add New Task" with the current index
+  //  document.getElementById("addNewTask").addEventListener("click", function () {
+  //   handleAddNewTaskClick(index);
+  // });
 
-  document.getElementById('addTaskButton').style.display = "none";
   
-  // console.log(index)
-  console.log(dailyTasks[index])
- 
-  document.getElementById('addNewTask').addEventListener('click', function(){
-    const taskName = document.getElementById("taskName").value;
-    const taskStatus = document.getElementById("taskStatus").value;
-    const taskLink = document.getElementById("taskLink").value;
-    console.log(taskName,taskStatus,taskLink)
-    document.getElementById('addNewTask').disabled = true;
+  // const addNewTaskButton = document.getElementById("addNewTask");
 
-    const task = {
-      taskName,
-      taskStatus,
-      taskLink,
-    };
+  // addNewTaskButton.addEventListener("click", (function (currentIndex) {
+  //   return function () {
+  //     handleAddNewTaskClick(currentIndex);
+  //   };
+  // })(index));
 
-    if (!dailyTasks[index]) {
-      dailyTasks[index] = { task: [] };
+  // for (let i = 0; i < 1; i++) {
+  //   addNewTaskButton.addEventListener("click", function () {
+  //     handleAddNewTaskClick(index);
+  //   });
+  // }
+}
+
+function handleAddNewTaskClick(currentIndex) {
+  console.log(currentIndex, 'so far so good');
+  const taskName = document.getElementById("taskName").value;
+  const taskStatus = document.getElementById("taskStatus").value;
+  const taskLink = document.getElementById("taskLink").value;
+
+  if (taskName === "" || taskStatus === "" || taskLink === "") {
+    return;
   }
 
-    dailyTasks[index].task.push(task);
-    saveData()
-    displayTasks()
+  const task = {
+    taskName,
+    taskStatus,
+    taskLink,
+  };
+// console.log(currentIndex)
+  // Use the captured index value to add the task
+  let result = dailyTasks.find(
+    (dailyTask, taskIndex) => taskIndex === currentIndex
+  );
+console.log(dailyTasks[currentIndex], currentIndex)
 
-   // Clear input fields or reset as needed
-   document.getElementById("taskName").value = "";
-   document.getElementById("taskStatus").value = "";
-   document.getElementById("taskLink").value = "";
-  })
+  if (true) {
+    dailyTasks[currentIndex].tasks.push(task);
+    saveData();
+    displayTasks();
+  }
+
+  // Clear input fields or reset as needed
+  document.getElementById("taskName").value = "";
+  document.getElementById("taskStatus").value = "";
+  document.getElementById("taskLink").value = "";
+  document.getElementById("addTaskButton").style.display = "block";
+  document.getElementById("addNewTask").style.display = "none";
 }
