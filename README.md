@@ -8,6 +8,8 @@
 
 ![Screenshot 2023-10-17 at 11 55 49 AM](https://github.com/shukumar-coderex/Daily-task-tracker-google-extension/assets/142991058/8e26f644-ff27-40b3-9a11-2c715b17a254)
 
+- check this extention in google chrome extension which name is (daily task tarcker).
+
 The Daily Task Tracker Chrome extension is designed to help users organize their daily tasks efficiently and generate a structured report for daily standup meetings. This extension allows you to input task titles, task names, and their respective statuses.
 
 
