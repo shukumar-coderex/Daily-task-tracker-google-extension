@@ -1,13 +1,16 @@
+//All task container
 let dailyTasks = [];
 
 document.getElementById("updateTaskButton").style.display = "none";
 document.getElementById("updateTitleButton").style.display = "none";
+document.getElementById("addNewTask").style.display = "none";
 
 // Load data from Chrome extension storage on page load
 chrome.storage.local.get({ dailyTasks: [] }, function (result) {
   dailyTasks = result.dailyTasks;
   displayTasks();
 });
+
 
 // Function to save data to Chrome extension storage
 function saveData() {
@@ -42,6 +45,7 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
   displayTasks();
 }
 
+
 // Function to display tasks
 function displayTasks() {
   standupTitleHide(true);
@@ -53,21 +57,11 @@ function displayTasks() {
     <h2>${dailyTask.title}</h2> 
     <button class="deleteBtn">Delete</button>
     <button class="TitleEdit">Edit</button>
-    <button class="addNewDataBtn" >Add ${index}</button>
+    <button class="addNewDataBtn" data=${dailyTask?.date}>Add Task</button>
     
     </div>
     `;
 
-    const addNewTaskBtn = listItem.querySelector(".addNewDataBtn");
-    addNewTaskBtn.addEventListener("click", () => {
-      addNewTaskData(index);
-      // console.log(addNewTaskBtn,index)
-    });
-  //   const addNewTaskBtn = listItem.querySelector(".addNewDataBtn");
-  //   const addNewTaskIndex = addNewTaskBtn.dataset.index;
-  // addNewTaskBtn.addEventListener("click", () => {
-  //   addNewTaskData(addNewTaskIndex);
-  // });
 
 
     const deleteBtn = listItem.querySelector(".deleteBtn");
@@ -103,8 +97,21 @@ function displayTasks() {
     listItem.appendChild(tasksList);
     taskList.appendChild(listItem);
   });
+
+const addNewTaskBtns = document.getElementsByClassName('addNewDataBtn');
+const buttons = Array.from(addNewTaskBtns);
+
+buttons.map(item =>{
+  let date = item.getAttribute('data')
+  item.addEventListener('click', () => {
+    addNewTaskData(date)
+  })
+})
 }
 
+
+
+//Handle edit taks title function
 function handleEditClick(inputTaskTitle, index) {
   document.getElementById("addTaskButton").style.display = "none";
   document.getElementById("updateTaskButton").style.display = "none";
@@ -136,6 +143,7 @@ function handleEditClick(inputTaskTitle, index) {
     });
 }
 
+
 //UPDATE STANDUP TITLE
 function updateTaskTitle(oldTitle, newTitle, index) {
   const dailyTask = dailyTasks.find((task) => task.title === oldTitle);
@@ -162,12 +170,18 @@ function deleteSingleTask(taskTitle, taskName) {
     dailyTask.tasks = dailyTask.tasks.filter(
       (task) => task.taskName !== taskName
     );
+    console.log(dailyTask, dailyTasks)
+
+    chrome.storage.local.set({ dailyTasks }, function () {
+      console.log("Data saved successfully.");
+    });
+
     saveData();
     displayTasks();
   }
 }
 
-//Delete a single task
+//Delete a single task function
 function deleteTask(title) {
   dailyTasks = dailyTasks.filter((task) => task.title !== title);
   saveData();
@@ -225,7 +239,27 @@ document.getElementById("showModal").addEventListener("click", function () {
   if (today?.title) {
     dailyTaskTitle.innerHTML = today?.title;
   } else {
-    dailyTaskTitle.innerHTML = "Today Have No Task Title";
+    // dailyTaskTitle.innerHTML = "Today Have No Task Title";
+
+
+
+
+    const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() - 1);
+
+  const dd = tomorrow.getDate().toString().padStart(2, "0");
+  const mm = (tomorrow.getMonth() + 1).toString().padStart(2, "0");
+  const yyyy = tomorrow.getFullYear().toString(); // Get the last two digits of the year
+
+  const yesterdayTask = dailyTasks.find(
+    (tasks) => tasks.date == `${dd}/${mm}/${yyyy}`)
+
+
+    
+    dailyTaskTitle.innerHTML = yesterdayTask?.title ? yesterdayTask.title  : "No Task"
+
+    
   }
 
   const todayTaskContainer = document.getElementById("todayTask");
@@ -233,7 +267,7 @@ document.getElementById("showModal").addEventListener("click", function () {
     const li = document.createElement("li");
     li.innerHTML = `
     <span>${task.taskName}</span> - <span>${task.taskStatus}</span>  - 
-    <a href="${task.taskLink}">Link</a>
+    <a href="${task.taskLink}" target="_blank">Link</a>
     `;
     todayTaskContainer.appendChild(li);
   });
@@ -270,7 +304,7 @@ function isYesterday() {
       const li = document.createElement("li");
       li.innerHTML = `
       <span>${task.taskName}</span> - <span>${task.taskStatus}</span>  - 
-      <a href="${task.taskLink}">Link</a>
+      <a href="${task.taskLink}" target="_blank">Link</a>
 
       `;
       yserdayDate.appendChild(li);
@@ -362,36 +396,22 @@ document.getElementById("copy-title").addEventListener("click", function () {
   toastContainer.appendChild(toast);
 });
 
-// added new task for specific date
-function addNewTaskData(index) {
+
+function addNewTaskData(date) {
   document.getElementById("addTaskButton").style.display = "none";
   document.getElementById("addNewTask").style.display = "block";
 
-  document.getElementById("addNewTask").addEventListener("click", ()=>handleAddNewTaskClick(index));
+  document.getElementById("addNewTask").addEventListener("click", ()=>handleAddNewTaskClick(date));
 
-  //  Add an event listener to "Add New Task" with the current index
-  //  document.getElementById("addNewTask").addEventListener("click", function () {
-  //   handleAddNewTaskClick(index);
-  // });
-
-  
-  // const addNewTaskButton = document.getElementById("addNewTask");
-
-  // addNewTaskButton.addEventListener("click", (function (currentIndex) {
-  //   return function () {
-  //     handleAddNewTaskClick(currentIndex);
-  //   };
-  // })(index));
-
-  // for (let i = 0; i < 1; i++) {
-  //   addNewTaskButton.addEventListener("click", function () {
-  //     handleAddNewTaskClick(index);
-  //   });
-  // }
 }
 
-function handleAddNewTaskClick(currentIndex) {
-  console.log(currentIndex, 'so far so good');
+//handle Add new task function
+let target;
+let dated;
+
+async function handleAddNewTaskClick(date) {
+  dated = date;
+
   const taskName = document.getElementById("taskName").value;
   const taskStatus = document.getElementById("taskStatus").value;
   const taskLink = document.getElementById("taskLink").value;
@@ -405,23 +425,42 @@ function handleAddNewTaskClick(currentIndex) {
     taskStatus,
     taskLink,
   };
-// console.log(currentIndex)
-  // Use the captured index value to add the task
-  let result = dailyTasks.find(
-    (dailyTask, taskIndex) => taskIndex === currentIndex
-  );
-console.log(dailyTasks[currentIndex], currentIndex)
 
-  if (true) {
-    dailyTasks[currentIndex].tasks.push(task);
-    saveData();
-    displayTasks();
+  try {
+    const data = await loadData(); // Load the data
+    target = data.find((item) => item?.date === dated);
+    target.tasks.push(task);
+    await saveDatas(data); // Save the updated data
+    console.log(dailyTasks, target);
+    displayTasks()
+
+    // Clear input fields or reset as needed
+    document.getElementById("taskName").value = "";
+    document.getElementById("taskStatus").value = "";
+    document.getElementById("taskLink").value = "";
+    document.getElementById("addTaskButton").style.display = "block";
+    document.getElementById("addNewTask").style.display = "none";
+  } catch (error) {
+    console.error("Error: ", error);
   }
+}
 
-  // Clear input fields or reset as needed
-  document.getElementById("taskName").value = "";
-  document.getElementById("taskStatus").value = "";
-  document.getElementById("taskLink").value = "";
-  document.getElementById("addTaskButton").style.display = "block";
-  document.getElementById("addNewTask").style.display = "none";
+//load new task
+function loadData() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get({ dailyTasks: [] }, (result) => {
+      dailyTasks = result.dailyTasks;
+      resolve(dailyTasks);
+    });
+  });
+}
+
+//save new added task
+function saveDatas(data) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.set({ dailyTasks: data }, () => {
+      console.log("Data saved successfully.");
+      resolve();
+    });
+  });
 }

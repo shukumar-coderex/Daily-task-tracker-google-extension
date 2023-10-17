@@ -1,5 +1,20 @@
 
- 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+
+body {
+  font-family: sans-serif;
+  color: #333;
+  /* line-height: 1.5; */
+  height: 97vh;
+  position: relative; 
+  align-items: flex-start;
+  justify-content: center;
+}
   .container{
     display: flex;
     justify-content: space-between;
@@ -42,22 +57,7 @@ ul > li{
   }
 
   /* modal */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-  }
-  
- 
-  body {
-    font-family: sans-serif;
-    color: #333;
-    /* line-height: 1.5; */
-    height: 97vh;
-    position: relative; 
-    align-items: flex-start;
-    justify-content: center;
-  }
+
  
 
  
@@ -296,20 +296,5 @@ button#saveEditButton:hover {
 }
 
 
-/* show toast css */
-
-/* #toastBox{
-  position: absolute;
-  bottom: 30px;
-  right: 30px; 
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 20px;
-}
-.toast{
-
-} */
 
 
