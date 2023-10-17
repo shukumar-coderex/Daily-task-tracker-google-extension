@@ -1,5 +1,9 @@
+
 //All task container
 let dailyTasks = [];
+
+
+
 
 document.getElementById("updateTaskButton").style.display = "none";
 document.getElementById("updateTitleButton").style.display = "none";
@@ -43,11 +47,13 @@ function addTask(taskTitle, taskName, taskStatus, taskLink, date) {
   dailyTask.tasks.push(task);
   saveData();
   displayTasks();
+  displayGetReportButton()
 }
 
 
 // Function to display tasks
 function displayTasks() {
+
   standupTitleHide(true);
   const taskList = document.getElementById("taskList");
   taskList.innerHTML = "";
@@ -55,9 +61,9 @@ function displayTasks() {
     const listItem = document.createElement("div");
     listItem.innerHTML = `<div class="title-container">
     <h2>${dailyTask.title}</h2> 
-    <button class="deleteBtn">Delete</button>
-    <button class="TitleEdit">Edit</button>
-    <button class="addNewDataBtn" data=${dailyTask?.date}>Add Task</button>
+    <button class="deleteBtn"><img  src="./images/delete.svg" class="icon"  alt="Delete Icon"></button>
+    <button class="TitleEdit"><img  src="./images/edit.svg" class="icon"  alt="Delete Icon"></button>
+    <button class="addNewDataBtn" data=${dailyTask?.date}><img  src="./images/add.svg" class="icon"  alt="Delete Icon"></button>
     
     </div>
     `;
@@ -83,7 +89,7 @@ function displayTasks() {
                      ${task.taskName} -
                     ${task.taskStatus} -
                      <a href="${task.taskLink}" target="_blank">Link</a>
-                     <button class="deleteBtn">Delete</button>
+                     <button class="deleteBtn"><img  src="./images/delete.svg" class="icon"  alt="Delete Icon"></button>
                 `;
 
       const deleteBtn = taskItem.querySelector(".deleteBtn");
@@ -96,6 +102,8 @@ function displayTasks() {
 
     listItem.appendChild(tasksList);
     taskList.appendChild(listItem);
+    displayGetReportButton()
+
   });
 
 const addNewTaskBtns = document.getElementsByClassName('addNewDataBtn');
@@ -118,6 +126,8 @@ function handleEditClick(inputTaskTitle, index) {
   document.getElementById("taskName").style.display = "none";
   document.getElementById("taskStatus").style.display = "none";
   document.getElementById("taskLink").style.display = "none";
+  document.getElementById("addNewTask").style.display = "none";
+
 
   document.getElementById("standupTitle").style.display = "none";
   document.getElementById("standupName").style.display = "none";
@@ -186,6 +196,7 @@ function deleteTask(title) {
   dailyTasks = dailyTasks.filter((task) => task.title !== title);
   saveData();
   displayTasks();
+  displayGetReportButton()
 }
 
 // Function to save an updated task
@@ -388,18 +399,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //show toast for copy text
-document.getElementById("copy-title").addEventListener("click", function () {
-  const toastContainer = document.getElementById("toastBox");
-  let toast = document.createElement("div");
-  toast.classList.add("toast");
-  toast.innerHTML = "Text Copy Successfully";
-  toastContainer.appendChild(toast);
-});
+// document.getElementById("copy-title").addEventListener("click", function () {
+//   const toastContainer = document.getElementById("toastBox");
+//   let toast = document.createElement("div");
+//   toast.classList.add("toast");
+//   toast.innerHTML = "Text Copy Successfully";
+//   toastContainer.appendChild(toast);
+// });
 
 
 function addNewTaskData(date) {
   document.getElementById("addTaskButton").style.display = "none";
+  document.getElementById("taskTitle").style.display = "none";
+  document.getElementById("updateTitleButton").style.display = "none";
+  document.getElementById("standupTitle").style.display = "none";
+
   document.getElementById("addNewTask").style.display = "block";
+
+
+  document.getElementById("taskName").style.display = "block";
+  document.getElementById("taskStatus").style.display = "block";
+  document.getElementById("taskLink").style.display = "block";
+
+
+
 
   document.getElementById("addNewTask").addEventListener("click", ()=>handleAddNewTaskClick(date));
 
@@ -431,7 +454,6 @@ async function handleAddNewTaskClick(date) {
     target = data.find((item) => item?.date === dated);
     target.tasks.push(task);
     await saveDatas(data); // Save the updated data
-    console.log(dailyTasks, target);
     displayTasks()
 
     // Clear input fields or reset as needed
@@ -464,3 +486,20 @@ function saveDatas(data) {
     });
   });
 }
+
+
+function displayGetReportButton(){
+  chrome.storage.local.get({ dailyTasks: [] }, (result) => {
+    dailyTasks = result.dailyTasks;
+    if(dailyTasks.length <= 0 ){
+      // console.log("no")
+      document.getElementById('showModal').disabled = true
+      document.getElementById('showModal').style.cursor = "not-allowed";
+    }else{
+      document.getElementById('showModal').disabled = false;
+      document.getElementById('showModal').style.cursor = "pointer";
+    }
+  })
+}
+
+displayGetReportButton()

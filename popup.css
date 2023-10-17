@@ -197,9 +197,11 @@ button#saveEditButton:hover {
   border: none;
   padding: 10px 15px;
   color: white;
+  width: auto;
   background: #eb573d;
   border-radius: 5px;
   cursor: pointer;
+  width: 80px;
 }
 
 
@@ -215,7 +217,7 @@ button#saveEditButton:hover {
 /* input filed tooltip */
   .task-label{
     display: flex;
-    justify-content: space-between;
+    gap:10px;
       font-size: 15px;    
       font-weight: bold;
       padding: 5px 0px;
@@ -230,9 +232,9 @@ button#saveEditButton:hover {
   text-align: center;
   background-color: #5c5e5f;
   border-radius: 50%;
-  width: 17px;
-  height: 17px;
-  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  font-size: 8px;
   line-height: 17px;
   cursor: default;
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
@@ -294,6 +296,22 @@ button#saveEditButton:hover {
   color: #fff;
   text-decoration: underline;
 }
+
+.icon{
+  height: 15px;
+  width: 15px;
+  color: red;
+}
+ul>li{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.addNewDataBtn{
+  cursor: pointer;
+}
+
 
 
 
