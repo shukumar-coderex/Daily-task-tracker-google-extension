@@ -76,6 +76,7 @@ ul > li{
   padding: 5px 8px;
   border-radius: 5px;
   cursor: pointer;
+  margin: 0px;
 }
 
   .deleteBtn{
@@ -85,11 +86,13 @@ ul > li{
     padding: 5px 8px;
     border-radius: 5px;
     cursor: pointer;
+    margin: 0px;
   }
   .title-container{
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    gap:8px;
   }
   #task-title-container{
     display: flex;
@@ -306,10 +309,18 @@ ul>li{
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 12px;
 }
 
 .addNewDataBtn{
   cursor: pointer;
+  margin: 0px;
+}
+
+.copy-btn-text{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }
 
 
